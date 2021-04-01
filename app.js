@@ -1,6 +1,6 @@
 //******** THINGS TODO ********/
 //- Postman Tests
-//- Push rounds dinamically
+//- Push games dinamically
 const express= require('express');
 const mongoose= require('mongoose');
 const bodyParser= require('body-parser');
@@ -36,6 +36,17 @@ app.post('/players', (req,res)=>{
     //>To compare passwords:
     //console.log(bcrypt.compareSync(req.body.newData.password, hash));
   })
+
+app.post('/players/:id/games', (req, res) =>{
+  Player.findByIdAndUpdate(
+    req.params.id,
+    { $push: {games: req.body.newData.games}}, 
+    {
+      new:true
+    },
+    (err,data)=>{ sendResponse(res, err, data) }
+  )
+})
 
 app.route('/players/:id')
 // READ
