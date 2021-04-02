@@ -5,45 +5,31 @@
 //-eslint
 
 const express= require('express');
-const mongoose= require('mongoose');
+const mongoose = require('mongoose');
 const bodyParser= require('body-parser');
 const app= express();
-const Player=require('./models/Player');
-const bcrypt = require('bcrypt');
 
 // Configuring PORT
-
 require('dotenv').config() 
-
 const PORT = process.env.PORT || 3000
 
 // Conntecting to Mongo local db
-mongoose.connect('mongodb://localhost/playerData')
+mongoose.connect('mongodb://localhost/playerData', () => console.log('Connected to DB'))
 
 app.use(bodyParser.json());
+app.get('/', (req,res) => {
+  res.json({
+    success: true,
+    message: 'You made it!'
+  })
+})
+app.use('/players', require('./controllers/players'));
 
 app.listen(PORT, ()=>{
 	console.log(`server is listening on port:${PORT}`)
 })
 
-// CREATE: Go to Postman to see Post request
-app.post('/players', (req,res)=>{
-  Player.remove({});
-  let hash = bcrypt.hashSync(req.body.newData.password, 10);
-  Player.create(
-    { 
-      name:req.body.newData.name,
-      email:req.body.newData.email,
-      password:hash,
-    }, 
-    (err,data)=>{ 
-      sendResponse(res, err, data);
-    }
-    )
-    //>To compare passwords:
-    //console.log(bcrypt.compareSync(req.body.newData.password, hash));
-  })
-
+/*
 app.post('/players/:id/games', (req, res) =>{
   Player.findByIdAndUpdate(
     req.params.id,
@@ -81,21 +67,4 @@ app.route('/players/:id')
   )
 })
 
-//Managing Response Callback
-
-function sendResponse(res, err, data){
-  if (err){
-    res.json({
-      success: false,
-      message: err
-    })
-  } else if (!data){
-    res.json({
-      success: false,
-      message: "Not Found"
-    })
-  } else {
-    res.json({success: true,data: data
-    })
-  }
-}
+*/
