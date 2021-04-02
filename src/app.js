@@ -1,23 +1,30 @@
 //******** THINGS TODO ********/
+//-estructura
 //- Postman Tests
 //- Push games dinamically
+//-eslint
+
 const express= require('express');
 const mongoose= require('mongoose');
 const bodyParser= require('body-parser');
-const port=8000;
 const app= express();
 const Player=require('./models/Player');
 const bcrypt = require('bcrypt');
+
+// Configuring PORT
+
+require('dotenv').config() 
+
+const PORT = process.env.PORT || 3000
 
 // Conntecting to Mongo local db
 mongoose.connect('mongodb://localhost/playerData')
 
 app.use(bodyParser.json());
 
-app.listen(port, ()=>{
-	console.log(`server is listening on port:${port}`)
+app.listen(PORT, ()=>{
+	console.log(`server is listening on port:${PORT}`)
 })
-
 
 // CREATE: Go to Postman to see Post request
 app.post('/players', (req,res)=>{
