@@ -2,18 +2,10 @@ const express= require('express');
 const mongoose = require('mongoose');
 const Player = require('../models/Player');
 const bcrypt = require('bcrypt');
-const router = express.Router()
 const sendResponse = require('../services/response')
+
 // CREATE NEW PLAYER
-
-
-
-router
-  .route("/")
-  .get((req,res) => {
-    res.send("hi you are in players")
-  })
-  .post((req,res) => {
+exports.newplayer = (req,res) => {
   Player.remove({}); //>>¿Remove all isn't working?//
   let hash = bcrypt.hashSync(req.body.newData.password, 10);
   Player.create(
@@ -29,6 +21,5 @@ router
     //>To compare passwords:
     //console.log(bcrypt.compareSync(req.body.newData.password, hash));
   }
-)
 
-module.exports = router;
+
