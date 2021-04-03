@@ -1,5 +1,6 @@
 //******** THINGS TODO ********/
-//-1 Cambiar callback por async/await
+//-1 Cambiar callback por async/await.
+    //Ref: https://www.youtube.com/watch?v=vjf774RKrLc&ab_channel=DevEd
 //-2 estructura
 //-3 Postman Tests
 //-4 eslint
