@@ -1,8 +1,8 @@
 //******** THINGS TODO ********/
-//-estructura
-//- Postman Tests
-//- Push games dinamically
-//-eslint
+//-1 Cambiar callback por async/await
+//-2 estructura
+//-3 Postman Tests
+//-4 eslint
 
 const express= require('express');
 const mongoose = require('mongoose');
