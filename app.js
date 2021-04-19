@@ -14,7 +14,7 @@ dotenv.config();
 // Routes
 const playersRoute = require('./src/api/routes/players')
 
-// Middlewares
+// Middleware
 app.use('/players', playersRoute);
 
 

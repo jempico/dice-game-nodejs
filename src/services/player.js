@@ -2,27 +2,22 @@ const Player = require('../models/player');
 const bcrypt = require('bcrypt');
 const uniqid = require('uniqid');
 const response = require('./response')
+const reject = require('./reject')
+
 const mongoose = require('mongoose');
 
 // CREATE NEW PLAYER
 exports.addPlayer = (req,res) => {
+  const playerDTO = ({name , email ,password} = req.body.newData)
   //Hashing password
-  let hash = bcrypt.hashSync(req.body.newData.password, 10);
+  playerDTO.password = bcrypt.hashSync(req.body.newData.password, 10);
   //Checking if name is null or empty
-  // if (name == null || name == '') {
-  // let name = uniqid('ANONIM-');
-  // } 
-  Player.create(
-    { 
-      name:req.body.newData.name,
-      email:req.body.newData.email,
-      password:hash,
-    }, 
-    (err,data)=>{ 
-      console.log('Im here')
-      response(res, err, data);
-    }
-    )
-    //>To compare passwords:
-    //console.log(bcrypt.compareSync(req.body.newData.password, hash));
+  if (name == null || name == '') {
+  playerDTO.name = uniqid('ANONIM-');
   }
+  //Creating an instance of Player through Player model
+    let newPlayer = Player.create(playerDTO)
+    .then(data => {console.log(data); response(res, data)} )
+    .catch((err) => {reject(err)})
+
+}
