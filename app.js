@@ -19,7 +19,7 @@ app.use('/players', playersRoute);
 
 
 // Conntecting to Mongo local db
-mongoose.connect('mongodb+srv://jempi:7NpRWnNwSQHDLbzS@rest-api.wfrd7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', () => console.log('Connected to DB'))
+mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@rest-api.wfrd7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`, () => console.log('Connected to DB'))
 
 // Starting the server
 app.listen(process.env.PORT, ()=>{
