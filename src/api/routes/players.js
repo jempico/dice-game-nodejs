@@ -6,12 +6,10 @@ const player = require('../../services/player');
 
 router
     .route("/")
-    //.get(player.readPlayers)
-    .get((req, res) => {
-        res.send('Hi, router works ok!')
-    })
+    .get(player.readPlayers)
     .post(player.addPlayer)
-    //.put(player.editPlayer)
+    .put(player.updateName)
+
 /*
 router    
     .route("/ranking")
@@ -24,11 +22,11 @@ router
 router    
     .route("/ranking/winner")
     .get(ranking.readWinner)
-
+*/
 router
     .route('/:id')
     .get(player.readPlayer)
-
+/*
 router
 
   .put(updateplayer.updateplayer)

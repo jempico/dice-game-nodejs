@@ -5,7 +5,7 @@ const ranking = require('../models/ranking')
 const sendResponse = require('../services/response')
 
 //ADDING GAME TO A PLAYER BY ID
-const addgame = (req, res) =>{
+const addGame = (req, res) =>{
     Player.findByIdAndUpdate(
     req.params.id,
     { $push: {games: req.body.newData.games}}, 
@@ -16,4 +16,4 @@ const addgame = (req, res) =>{
     )
 }
 
-module.exports = {addgame}
+module.exports = {addGame}

@@ -18,7 +18,7 @@ const playersRoute = require('./src/api/routes/players')
 app.use('/players', playersRoute);
 
 
-// Conntecting to Mongo local db
+// Conntecting to Mongo Atlas db
 mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@rest-api.wfrd7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`, () => console.log('Connected to DB'))
 
 // Starting the server
