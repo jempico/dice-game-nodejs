@@ -12,6 +12,8 @@ const RankingSchema = Schema({
 const Ranking = mongoose.model('Ranking',RankingSchema);
 
 let ranking = new Ranking();
+ranking.save();
+
 
 //Exporting Ranking instance based on Ranking Model
 module.exports = ranking;

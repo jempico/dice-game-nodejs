@@ -35,7 +35,7 @@ router
 router
     .route("/:id/games")
     .post(game.addGame)
-    //.get(game.readGames)
-    //.delete(game.deleteGames)
+    .get(game.readGames)
+    .delete(game.removeGames)
 
 module.exports = router;

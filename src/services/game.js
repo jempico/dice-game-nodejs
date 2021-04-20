@@ -15,11 +15,31 @@ const addGame = (req, res) =>{
     //Setting up score
     newGame.setScore();
     //Pushing game to Players collection
-    Player.findByIdAndUpdate(id, 
-        { new:true },
+    Player.findByIdAndUpdate(
+        req.params.id,
+        { $push: {games: newGame}}, 
+        {
+            new:true
+        },
         (err,data)=>{ sendResponse(res, err, data) }
-    )
-    
+        )
+    }
+
+const readGames = (req, res) => {
+    Player.findById(req.params.id,'games', (err,data)=>{
+        sendResponse(res, err, data);
+      })
 }
 
-module.exports = {addGame}
+const removeGames = (req, res) => {
+    Player.findByIdAndUpdate(
+        req.params.id, 
+        { games:[] }, 
+        {
+            new:true
+        },
+        (err,data)=>{ sendResponse(res, err, data); 
+        })
+    }
+
+module.exports = {addGame, readGames, removeGames}
