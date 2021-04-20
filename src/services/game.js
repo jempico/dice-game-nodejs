@@ -1,19 +1,25 @@
 const mongoose = require('mongoose');
-const game = require('../models/game');
-const player = require('../models/player');
-const ranking = require('../models/ranking')
+const Player = require('../models/player')
+const gameFactory = require('../models/game');
 const sendResponse = require('../services/response')
 
 //ADDING GAME TO A PLAYER BY ID
 const addGame = (req, res) =>{
-    Player.findByIdAndUpdate(
-    req.params.id,
-    { $push: {games: req.body.newData.games}}, 
-    {
-        new:true
-    },
-    (err,data)=>{ sendResponse(res, err, data) }
+    const {id} = req.params;
+
+    //Creating an instance of Game through gameFactory
+    const newGame = gameFactory();
+
+    //Running gsame
+    newGame.runGame();
+    //Setting up score
+    newGame.setScore();
+    //Pushing game to Players collection
+    Player.findByIdAndUpdate(id, 
+        { new:true },
+        (err,data)=>{ sendResponse(res, err, data) }
     )
+    
 }
 
 module.exports = {addGame}

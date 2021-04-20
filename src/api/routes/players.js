@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const player = require('../../services/player');
-//const game = require('../../services/game')
+const game = require('../../services/game')
 //const ranking = require('../../services/ranking')
 
 router
@@ -31,11 +31,11 @@ router
 
   .put(updateplayer.updateplayer)
   .delete(deleteplayer.deleteplayer)
-
+*/
 router
     .route("/:id/games")
     .post(game.addGame)
-    .get(game.readGames)
-    .delete(game.deleteGames)
-*/
+    //.get(game.readGames)
+    //.delete(game.deleteGames)
+
 module.exports = router;
