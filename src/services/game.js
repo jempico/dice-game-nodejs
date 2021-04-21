@@ -1,45 +1,83 @@
-const mongoose = require('mongoose');
-const Player = require('../models/player')
 const gameFactory = require('../models/game');
 const sendResponse = require('../services/response')
+const player = require('../repositories/player')
 
+class GameService {
+    addGame(req, res){
+        const {id} = req.params;
+
+        //Creating an instance of Game 
+        const newGame = gameFactory()
+        newGame.runGame()
+        newGame.setScore();
+    
+        //Pushing game to Players collection and updating player SuccessRate
+        player.addGame(id, newGame, (err, data) => {
+            if (err){
+                sendResponse(res, err)
+             } else {
+                player.updateSuccess(data, (err, data) => {
+                    sendResponse(res, err, data)
+                })}
+        })
+    }
+    readGames(req, res){
+        const {id} = req.params;
+        player.readGames(id, 'games', (err, data) => {
+            sendResponse(res, err, data);
+        })
+    }
+    removeGames(req, res){
+        const {id} = req.params;
+        player.removeGames(id, (err, data) => {
+            sendResponse(res, err, data);
+        })
+    }
+}
+
+module.exports = new GameService;
+
+
+
+
+/*
 //ADDING GAME TO A PLAYER BY ID
 const addGame = (req, res) =>{
     const {id} = req.params;
 
-    //Creating an instance of Game through gameFactory
-    const newGame = gameFactory();
-
-    //Running gsame
-    newGame.runGame();
-    //Setting up score
+    //Creating an instance of Game 
+    const newGame = gameFactory()
+    newGame.runGame()
     newGame.setScore();
-    //Pushing game to Players collection
-    Player.findByIdAndUpdate(
-        req.params.id,
-        { $push: {games: newGame}}, 
-        {
-            new:true
-        },
-        (err,data)=>{ sendResponse(res, err, data) }
-        )
+
+    //Pushing game to Players collection and updating player SuccessRate
+    player.addGame(id, newGame, (err, data) => {
+        if (err){
+            sendResponse(res, err)
+         } else {
+            player.updateSuccess(data, (err, data) => {
+                sendResponse(res, err, data)
+            })}
+    })
     }
 
-const readGames = (req, res) => {
-    Player.findById(req.params.id,'games', (err,data)=>{
+
+//READING GAMES
+const readGames = (req, res) =>{
+    const {id} = req.params;
+    player.readGames(id, 'games', (err, data) => {
         sendResponse(res, err, data);
-      })
+    })
 }
 
-const removeGames = (req, res) => {
-    Player.findByIdAndUpdate(
-        req.params.id, 
-        { games:[] }, 
-        {
-            new:true
-        },
-        (err,data)=>{ sendResponse(res, err, data); 
-        })
-    }
+//REMOVING GAMES
 
-module.exports = {addGame, readGames, removeGames}
+const removeGames = (req, res) => {
+    const {id} = req.params;
+    player.removeGames(id, (err, data) => {
+        sendResponse(res, err, data);
+    })
+}
+
+module.exports = {readGames, removeGames}
+*/

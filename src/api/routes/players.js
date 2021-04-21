@@ -26,12 +26,7 @@ router
 router
     .route('/:id')
     .get(player.readPlayer)
-/*
-router
 
-  .put(updateplayer.updateplayer)
-  .delete(deleteplayer.deleteplayer)
-*/
 router
     .route("/:id/games")
     .post(game.addGame)

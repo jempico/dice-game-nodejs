@@ -6,12 +6,12 @@ class Game {
     this.dice2 = '';
     this.score = 0;
     this.result = '';
-  }
+}
   runGame(){
     this.dice1 = randomizer();
     this.dice2 = randomizer();
- }
- setScore(){
+}
+   setScore(){
     let sumNum = this.dice1 + this.dice2;
     if (sumNum == 7) {
        this.score = 1;

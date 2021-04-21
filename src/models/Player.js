@@ -8,7 +8,6 @@ const PlayerSchema = Schema({
   successRate: { type: Number },
   date: { type: Date, default: Date.now } ,
   games: [ { 
-    round: { type: Number},
     dice1: { type: Number},
     dice2: { type: Number},
     score: { type: Boolean},
