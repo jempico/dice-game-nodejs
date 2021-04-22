@@ -7,11 +7,14 @@ const PlayerSchema = Schema({
   password: { type: String, required: true },
   successRate: { type: Number },
   date: { type: Date, default: Date.now } ,
+  wins: { type: Number },
+  rounds: { type: Number },
   games: [ { 
     dice1: { type: Number},
     dice2: { type: Number},
     score: { type: Boolean},
-    result: { type: String} } ] 
+    result: { type: String} } ]
+  
 });
 
 //Exporting Player model based on PlayerSchema

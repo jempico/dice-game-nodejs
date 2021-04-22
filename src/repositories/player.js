@@ -17,6 +17,7 @@ class PlayerRepository {
                  sendResponse(err, data) 
             })
         }
+
     readPlayers(sendResponse){
         Player.find(({}),(err,data)=>{
             sendResponse(err, data);
@@ -27,11 +28,6 @@ class PlayerRepository {
             sendResponse(err, data);
           })
     }
-
-
-
- 
-
     addGame(id, newGame, sendResponse){
         Player.findByIdAndUpdate(
             id,
@@ -41,10 +37,28 @@ class PlayerRepository {
                 sendResponse(err, data);
         })
     }
-    updateSuccess(id, sendResponse){
+    updateRounds(id, sendResponse){
         Player.findByIdAndUpdate(
             id,
-            {successRate: 100}, 
+            { $inc: { rounds: 1 } }, 
+            {new:true},
+            (err,data)=>{
+                 sendResponse(err, data) 
+            })
+        }
+    updateWins(id, sendResponse){
+        Player.findByIdAndUpdate(
+            id,
+            { $inc: { wins: 1 } }, //> Using spread operator so as to be able to update each record passing only the body parameter to update. Otherwise, if the values were not included, they would be set to "null". 
+            {new:true},
+            (err,data)=>{
+                 sendResponse(err, data) 
+            })
+        }
+    updateSuccess(id, successDTO, sendResponse){
+        Player.findByIdAndUpdate(
+            id,
+            {successRate: successDTO}, 
             { new:true },
             (err,data) => { 
                 sendResponse(err, data);

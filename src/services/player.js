@@ -1,7 +1,8 @@
 const bcrypt = require('bcrypt');
 const uniqid = require('uniqid');
 const sendResponse = require('./response');
-const player = require('../repositories/player')
+const player = require('../repositories/player');
+const ranking = require('../repositories/ranking');
 
 class PlayerService {
   addPlayer(req, res){
@@ -17,8 +18,15 @@ class PlayerService {
     }
     //Creating an instance of Player and saving it into the DB
     player.addPlayer(playerDTO, (err, data) => {
-        sendResponse(res, err, data)}
-    )
+      if (err) { sendResponse(res, err)}
+      else {
+        ranking.addPlayer(data, (err, data)  => {
+            sendResponse(res, err, data)
+        })
+
+      }
+    } 
+  )
   }
 
   updateName(req,res){

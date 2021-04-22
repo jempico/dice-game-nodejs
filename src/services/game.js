@@ -11,15 +11,33 @@ class GameService {
         newGame.runGame()
         newGame.setScore();
     
-        //Pushing game to Players collection and updating player SuccessRate
         player.addGame(id, newGame, (err, data) => {
-            if (err){
+            if (err) {
                 sendResponse(res, err)
-             } else {
-                player.updateSuccess(data, (err, data) => {
-                    sendResponse(res, err, data)
-                })}
-        })
+            } else {
+                player.updateRounds(id, (err, data) => {
+                    if (err) {
+                        sendResponse(res, err) 
+                    } else if (newGame.result == 'WIN') {
+                            player.updateWins(id, (err, data) => {
+                                if (err) sendResponse(res, err)
+                                setSuccessRate(res, data);
+                            })
+                        } 
+                    else {  
+                        setSuccessRate(res, data)
+                    }
+                })
+            }
+    })
+
+        function setSuccessRate(res, data) {
+            let successDTO = data.wins/data.rounds
+            player.updateSuccess(id, successDTO, (err,data)=> {
+                sendResponse(res, err, data)
+            })
+        }
+
     }
     readGames(req, res){
         const {id} = req.params;

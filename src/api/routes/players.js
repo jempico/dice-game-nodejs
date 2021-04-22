@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const player = require('../../services/player');
 const game = require('../../services/game')
-//const ranking = require('../../services/ranking')
+const ranking = require('../../services/ranking')
 
 router
     .route("/")
@@ -10,11 +10,11 @@ router
     .post(player.addPlayer)
     .put(player.updateName)
 
-/*
+
 router    
     .route("/ranking")
     .get(ranking.readPlayers)
-
+/*
 router    
     .route("/ranking/loser")
     .get(ranking.readLoser)
