@@ -1,99 +1,137 @@
+const mongoose = require('mongoose');
+const Player = require('../models/player')
 const bcrypt = require('bcrypt');
 const uniqid = require('uniqid');
-const sendResponse = require('./response');
-const player = require('../repositories/player');
-const ranking = require('../repositories/ranking');
+const jwt = require('jsonwebtoken');
 
 class PlayerService {
-  addPlayer(req, res){
-    const playerDTO = {
-      name: req.body.newData.name,
-      email: req.body.newData.email
+    async addPlayer(playerDTO){
+        if (playerDTO.name == null || playerDTO.name == '') {
+        playerDTO.name = uniqid('ANONIM-');
+        }
+        playerDTO.password = bcrypt.hashSync(playerDTO.password, 10)
+        let result = await Player.create(playerDTO)
+        return result;
     }
-    //Hashing password
-    playerDTO.password = bcrypt.hashSync(req.body.newData.password, 10);
-    //Checking if name is null or empty
-    if (playerDTO.name == null || playerDTO.name == '') {
-    playerDTO.name = uniqid('ANONIM-');
+    async updateName(query, newName){
+        let result = await Player.findOneAndUpdate(query, {name: newName})
+        return result;
     }
-    //Creating an instance of Player and saving it into the DB
-    player.addPlayer(playerDTO, (err, data) => {
-      if (err) { sendResponse(res, err)}
-      else {
-        ranking.addPlayer(data, (err, data)  => {
-            sendResponse(res, err, data)
-        })
-
-      }
-    } 
-  )
-  }
-
-  updateName(req,res){
-    const query = { name: req.body.currentData.name };
-    const newName = req.body.newData.name
-      player.updateName(query, newName, (err,data) => {
-        sendResponse(res, err, data)
-      })
+    async read(id, query){
+        let result = await Player.findById(id, query)
+        return result;
+        }
+    async readPlayers(query){
+        let result = await Player.find({}, query)
+        return result;
     }
+    async readPlayersRanking(){
+        let result = await Player.find({}, '_id name successRate').sort({ successRate : 'desc'})
+        return result;
+    }
+    async addGame(id, newGame){
+        let result = await Player.findByIdAndUpdate(
+            id,
+            { $push: {games: newGame}}, 
+            { new:true })
+        return result; 
+    }
+    async setSuccess(id, wins, rounds){
+        let successDTO = wins/rounds
+        let success;
+        if (isNaN(successDTO)) {
+            success = 0;
+        } else{
+            success = successDTO.toFixed(2);
+        }
+        let result = await Player.findByIdAndUpdate(
+            id,
+            {successRate: success}, 
+            { new:true })
+        return result;
+        }
+    
+    checkWins(gamesList){
+            let wins = 0;
+            gamesList.forEach(obj => { 
+                if (obj.result == 'WIN') { wins++ }}) 
+            return wins;
+        }
+        
+    async countWins(array){
+        let games = array;
+        let result = await Player.games.aggregate(
+            [
+              {
+                $match: {
+                  result: {
+                    $eq: 'WIN'
+                  }
+                }
+              },
+              {
+                $count: "wins"
+              }
+            ]
+          )
+        return result;
+    }     
 
-  readPlayers(req,res){
-    player.readPlayers((err, data) => {
-      sendResponse(res, err, data)
-    })
-  }
-
-  readPlayer = (req,res)=>{
-    const {id} = req.params
-    player.readPlayer(id, (err, data) => {
-      sendResponse(res, err, data)
-    })
-  }
+    async removeGames(id) {
+        let result = await Player.findByIdAndUpdate(id, { games:[] }, { new:true })
+        return result;    
+    }
+    async readOverallSuccess(){
+        let result = await Player.aggregate([
+            {
+              $group : {
+                 _id : null,
+                 overallSuccessRate: { $avg: "$successRate" },
+                 totalPlayers: { $sum: 1 }
+              }
+            }
+           ])
+        return result;
+    }
+    async getMaxSuccess(){
+        let result = await Player.aggregate([
+            {
+              $group : {
+                 _id : null,
+                 maxSuccessRate: { $max: "$successRate" },
+              }
+            }
+           ])
+        return result;
+    }
+    async getMinSuccess(){
+        let result = await Player.aggregate([
+            {
+              $group : {
+                 _id : null,
+                 minSuccessRate: { $min: "$successRate" },
+              }
+            }
+           ])
+        return result;
+    }
+    async readWinnerLoser(query){
+        let result = await Player.find({ successRate: query }, '_id successRate')
+        return result;
+    }   
+    async deleteAll() {
+        let result = await Player.remove({});
+        return result;    
+    }
+    async createToken(obj){
+        let result = jwt.sign({id: obj._id}, process.env.SECRET_TOKEN_ACCESS, {
+            expiresIn: 86400 // 24h
+          })
+        return result;
+    }
+    
 }
+
+
 
 module.exports = new PlayerService;
-
-
-
-/*
-// CREATE NEW PLAYER
-const addPlayer = (req,res) => {
-  const playerDTO = ({name , email ,password} = req.body.newData)
-  //Hashing password
-  playerDTO.password = bcrypt.hashSync(req.body.newData.password, 10);
-  //Checking if name is null or empty
-  if (playerDTO.name == null || playerDTO.name == '') {
-  playerDTO.name = uniqid('ANONIM-');
-  }
-  //Creating an instance of Player and saving it into the DB
-  player.addPlayer(playerDTO, (err, data) => {
-      sendResponse(res, err, data)}
-  )
-}
-
-
-// UPDATE PLAYER NAME
-const updateName = (req,res)=>{
-  const query = { name: req.body.currentData.name };
-  const newName = req.body.newData.name
-    player.updateName(query, newName, (err,data) => {
-      sendResponse(res, err, data)
-    })
-  }
-
-// READ PLAYERS
-const readPlayers = (req,res) =>{
-  player.readPlayers((err, data) => {
-    sendResponse(res, err, data)
-  })
-}
-
-// READ ONE PLAYER
-const readPlayer = (req,res)=>{
-  const {id} = req.params
-  player.readPlayer(id, (err, data) => {
-    sendResponse(res, err, data)
-  })
-}
-
-*/

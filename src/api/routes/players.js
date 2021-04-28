@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const player = require('../../services/player');
-const game = require('../../services/game')
-const ranking = require('../../services/ranking')
+const player = require('../controllers/player');
+const game = require('../controllers/game')
+const ranking = require('../controllers/ranking')
 
 router
     .route("/")
@@ -11,10 +11,11 @@ router
     .put(player.updateName)
 
 
+
 router    
     .route("/ranking")
     .get(ranking.readPlayers)
-/*
+
 router    
     .route("/ranking/loser")
     .get(ranking.readLoser)
@@ -22,7 +23,7 @@ router
 router    
     .route("/ranking/winner")
     .get(ranking.readWinner)
-*/
+
 router
     .route('/:id')
     .get(player.readPlayer)
@@ -31,6 +32,10 @@ router
     .route("/:id/games")
     .post(game.addGame)
     .get(game.readGames)
-    .delete(game.removeGames)
+    .delete(game.deleteGames)
+
+router
+    .route('/delete')
+    .delete(player.deleteAll)
 
 module.exports = router;

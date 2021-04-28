@@ -25,6 +25,11 @@ class Game {
  }
 }
 
-const gameFactory = () => { return new Game() };
 
-module.exports = gameFactory; 
+class GameFactory{
+   create() {
+      return new Game();
+   }
+}
+
+module.exports = new GameFactory;
