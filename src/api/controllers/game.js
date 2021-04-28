@@ -11,7 +11,6 @@ class GameController {
             const gamesList = await player.read(id, 'games')
             let rounds = gamesList.games.length;
             let wins = await player.checkWins(gamesList.games);
-            console.log(wins);
             const successUpdated = await player.setSuccess(id, wins, rounds);
             res.status(200).json({
                 success: true,

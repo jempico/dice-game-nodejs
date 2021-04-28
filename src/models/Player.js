@@ -16,6 +16,8 @@ const PlayerSchema = Schema({
     score: { type: Boolean},
     result: { type: String} } ]
   
+}, {
+  versionKey: false
 });
 
 PlayerSchema.statics.encryptPassword = (password) => {

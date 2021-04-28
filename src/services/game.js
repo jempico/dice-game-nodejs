@@ -1,13 +1,20 @@
 const mongoose = require('mongoose');
-const gameFactory = require('../models/game')
+const Game = require('../models/game')
 
 class GameService {
     async createGame(){
-        let result = gameFactory.create()
-        result.runGame();
-        result.setScore();
-        return result;
-    }  
+        try {
+            let newGame = new Game();
+            newGame.save()
+            newGame.runGame();
+            newGame.getScore();
+            console.log(newGame);
+            return newGame;
+        } catch(err) {
+            return err;
+        }
+        
+    }
 }
 
 

@@ -1,5 +1,6 @@
 WORK IN PROGRESS
-Rest API that can Create, Read, Update, and Delete (CRUD) documents in MongoDB.
+
+Rest API that can Create, Read, Update, and Delete (CRUD) documents using MongoDB Atlas
 
 Things I've learned
 - Encrypt user passwords with "bcrypt".
