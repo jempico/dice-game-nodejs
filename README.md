@@ -3,14 +3,23 @@ Rest API that can Create, Read, Update, and Delete (CRUD) documents using MongoD
 
 ## Installation:
 1. Install the program (type 'npm install' in your terminal).
-     
+
+2. Add environment variables: edit or create and `.env` file in the root directory with the following data:
+
+     ```
+     PORT=3000
+    DB_USER = tester
+    DB_PASSWORD = AWnHq3IDZaeDL8DP
+    SECRET_TOKEN_ACCESS = 3d9683dc562b1e28fafec01bf1b4438da8faf35b205adf7049221854076040d879882ebd9c900f71dbf18352d08ae363c5f0f3eacabe40892f0777e9f27f0e93
+     ``` 
+          
 ## Run:
   
 
-2. Run the program (type 'node app' in your terminal).
+1. Run the program (type 'node app' in your terminal).
 
 
-3. Test routes:
+2. Test routes:
 
     - **POST /players**:
         adds a new player
