@@ -10,23 +10,24 @@ const GameSchema = Schema({
   versionKey: false
 });
 
-GameSchema.methods.runGame = function() {
-    this.dice1 = randomizer();
-    this.dice2 = randomizer();
-    return this;
+GameSchema.statics.runGame = function() {
+    return randomizer();
 }
 
-GameSchema.methods.getScore = function() {
-    let sumNum = this.dice1 + this.dice2;
-    if (sumNum == 7) {
-       this.result= 'WIN'
-       return this;
-    } else if (sumNum !== 7) {
-       this.result= 'LOST'
-       return this;
-    } else {
-       return `Something went wrong`;
-    }
+GameSchema.methods.getScore = async function() {
+   try {
+      let sumNum = this.dice1 + this.dice2;
+      if (sumNum == 7) {
+         this.result= 'WIN'
+         return this;
+      } else if (sumNum !== 7) {
+         this.result= 'LOST'
+         return this;
+      } else {
+         return `Something went wrong`;
+      }
+   } catch(err) { return err }
+
 }
 //Exporting Game model based on GameSchema
 module.exports= mongoose.model('Game',GameSchema);

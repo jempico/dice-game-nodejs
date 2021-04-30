@@ -4,17 +4,22 @@ class playerController {
     //CREATE PLAYER
   async addPlayer(req, res){
     try {      
-      const playerDTO = {
-        name: req.body.newData.name,
-        email: req.body.newData.email,
-        password: req.body.newData.password
+      const {name, email, password} = req.body.newData;
+      const playerFound = await player.checkIfExists(name);
+      if (playerFound.length === 0) {
+        const playerCreated = await player.addPlayer(name, email, password)
+        const token = await player.createToken(playerCreated);
+        res.status(200).json({
+          success: true,
+          text: `user with ID ${playerCreated._id} created and added to ranking!`,
+          token: token})
+      } else {
+        res.status(400).json({
+          success: false,
+          text: 'This name is already taken. Please choose another name'})
       }
-      const playerCreated = await player.addPlayer(playerDTO)
-      const tokenCreated = await player.createToken(playerCreated);
-      res.status(200).json({
-        success: true,
-        text: `user with ID ${playerCreated._id} created and added to ranking!`,
-        token: tokenCreated})
+
+
     } catch(err) {
       res.status(400).json({ success: false, error: err })}
   }

@@ -5,13 +5,18 @@ const uniqid = require('uniqid');
 const jwt = require('jsonwebtoken');
 
 class PlayerService {
-    async addPlayer(playerDTO){
-        if (playerDTO.name == null || playerDTO.name == '') {
-        playerDTO.name = uniqid('ANONIM-');
-        }
-        playerDTO.password = bcrypt.hashSync(playerDTO.password, 10)
-        let result = await Player.create(playerDTO)
+    async checkIfExists(nameDTO){
+        let result = await Player.find({name: {$eq: nameDTO}})
         return result;
+    }
+      async addPlayer(name, email, password){
+        let newPlayer = new Player({
+            name: Player.setAnonimName(name),
+            email,
+            password: Player.encryptPassword(password)
+        })
+        await newPlayer.save()
+        return newPlayer;
     }
     async updateName(query, newName){
         let result = await Player.findOneAndUpdate(query, {name: newName})
@@ -124,9 +129,7 @@ class PlayerService {
         return result;    
     }
     async createToken(obj){
-        let result = jwt.sign({id: obj._id}, process.env.SECRET_TOKEN_ACCESS, {
-            expiresIn: 86400 // 24h
-          })
+        let result = jwt.sign({id: obj._id}, process.env.SECRET_TOKEN_ACCESS)
         return result;
     }
     

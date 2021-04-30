@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt');
+const uniqid = require('uniqid');
 
 const PlayerSchema = Schema({
   name: { type: String, unique: true },
@@ -20,9 +21,21 @@ const PlayerSchema = Schema({
   versionKey: false
 });
 
-PlayerSchema.statics.encryptPassword = (password) => {
+PlayerSchema.statics.encryptPassword = function(password) {
    return bcrypt.hashSync(password, 10)
-
 }
+
+PlayerSchema.statics.comparePassword = function(password, receivedPassword) {
+  return bcrypt.compare(password, receivedPassword)
+}
+
+PlayerSchema.statics.setAnonimName = function(name) {
+  if (name == null || name == '') {
+    return uniqid('ANONIM-');
+} else {
+  return name;
+}
+}
+
 //Exporting Player model based on PlayerSchema
 module.exports= mongoose.model('Player',PlayerSchema);

@@ -4,12 +4,13 @@ const Game = require('../models/game')
 class GameService {
     async createGame(){
         try {
-            let newGame = new Game();
-            newGame.save()
-            newGame.runGame();
-            newGame.getScore();
-            console.log(newGame);
-            return newGame;
+            let newGame = new Game({
+                dice1 : Game.runGame(),
+                dice2 : Game.runGame()
+            });
+            await newGame.save()
+            let savedGame = await newGame.getScore();
+            return savedGame;
         } catch(err) {
             return err;
         }

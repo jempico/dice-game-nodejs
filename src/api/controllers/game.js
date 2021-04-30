@@ -19,8 +19,6 @@ class GameController {
             res.status(400).json({ success: false, error: err })}
     }
 
-
-
     // READ ALL GAMES
     async readGames(req, res){
         try { 

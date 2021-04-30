@@ -1,41 +1,39 @@
 const express = require('express');
 const router = express.Router();
 const player = require('../controllers/player');
-const game = require('../controllers/game')
-const ranking = require('../controllers/ranking')
-
+const game = require('../controllers/game');
+const ranking = require('../controllers/ranking');
+const authJwt = require('../../middlewares/authJwt')
 router
     .route("/")
-    .get(player.readPlayers)
+    .get(authJwt.verifyToken, player.readPlayers)
     .post(player.addPlayer)
-    .put(player.updateName)
-
-
+    .put(authJwt.verifyToken, player.updateName)
 
 router    
     .route("/ranking")
-    .get(ranking.readPlayers)
+    .get(authJwt.verifyToken, ranking.readPlayers)
 
 router    
     .route("/ranking/loser")
-    .get(ranking.readLoser)
+    .get(authJwt.verifyToken, ranking.readLoser)
 
 router    
     .route("/ranking/winner")
-    .get(ranking.readWinner)
+    .get(authJwt.verifyToken, ranking.readWinner)
 
 router
     .route('/:id')
-    .get(player.readPlayer)
+    .get(authJwt.verifyToken, player.readPlayer)
 
 router
     .route("/:id/games")
-    .post(game.addGame)
-    .get(game.readGames)
-    .delete(game.deleteGames)
+    .post(authJwt.verifyToken, game.addGame)
+    .get(authJwt.verifyToken, game.readGames)
+    .delete(authJwt.verifyToken, game.deleteGames)
 
 router
     .route('/delete')
-    .delete(player.deleteAll)
+    .delete(authJwt.verifyToken, player.deleteAll)
 
 module.exports = router;
