@@ -14,11 +14,7 @@
     <br />
   </p>
 
-</div>
-
-
-
-<!-- TABLE OF CONTENTS -->
+  <!-- TABLE OF CONTENTS -->
 <details>
   <summary>Table of Contents</summary>
   <ol>
@@ -32,23 +28,26 @@
     <li><a href="#contact">Contact</a></li>
   </ol>
 </details>
+</div>
 
 
+</br>
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
+
+<img align="right" width="300" src="https://user-images.githubusercontent.com/25463174/146230752-caa2de57-fdd5-4eac-9573-cf31e8978d7d.gif">
 
 As part of my back-end with <b>NodeJS</b> learning journey, I've built a REST API that supports a Dice Game with <a href="https://expressjs.com/">Express</a>, <a href="https://jwt.io/introduction">JWT</a> and <a href="https://www.mongodb.com/">MongoDB</a>. Restful API best practices are applied, as following this <a href="https://abdulrwahab.medium.com/api-architecture-best-practices-for-designing-rest-apis-bf907025f5f">article</a> on API Architecture.
 
 A second version of the project using OOP (JavasScript Classes) and MySQL can be found here: <a href="https://github.com/jempico/dice-game-nodejs-mysql">Rest API for Dice Game (MySQL)</a>.
 
-<img align="center" src="https://user-images.githubusercontent.com/25463174/146230752-caa2de57-fdd5-4eac-9573-cf31e8978d7d.gif">
+The basic premise of the game is this: each user roll 2 dices, and if the result is 7, the user scores a point. The user that scores more points, wins! Easy peasy! 
+</br>
+</br>
 
 
 ## Main Features
-
-The basic premise of the game is this: each user roll 2 dices, and if the result is 7, the user scores a point. The user that scores more points, wins! Easy peasy! 
-
 
 Here are the main features of the app:
 * <b>Login</b>: to play a user must be registered in the app either with a non-repeated name or as 'Anonymous'. Once created, it will be given a JWT Token. 
@@ -150,6 +149,7 @@ To test all routes (except POST/player) use an authentication header using Beare
 ```
 Authorization: Bearer <token> 
 ```
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 
 ## Things I've learned
