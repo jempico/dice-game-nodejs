@@ -13,7 +13,7 @@
     A REST API for a Dice Game built with NodeJS, MongoDB, Mongoose, and JWT.
     <br />
   </p>
-   ![giphy](https://user-images.githubusercontent.com/25463174/146230408-04b514e6-0e1a-414a-8e51-05a69694921b.gif)
+![giphy](https://user-images.githubusercontent.com/25463174/146230752-caa2de57-fdd5-4eac-9573-cf31e8978d7d.gif)
 
 </div>
 
