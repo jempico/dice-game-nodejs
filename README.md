@@ -110,7 +110,8 @@ To get a local copy up and running follow these simple steps.
 Some examples of how the request body should look like in order to make a request:
 
 1. <b>POST/players</b>: adds a new player
-   ``` {
+   ``` 
+   {
             "newData":{
                 "name": "Laia",
                 "email": "laia@gmail.com",
@@ -120,7 +121,8 @@ Some examples of how the request body should look like in order to make a reques
    ```
 
 2. <b>PUT/players</b>:  updates player name 
-   ```     {
+   ```     
+   {
         "currentData": {
             "name": "currentName"
         },
