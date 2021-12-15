@@ -13,7 +13,6 @@
     A REST API for a Dice Game built with NodeJS, MongoDB, Mongoose, and JWT.
     <br />
   </p>
-![giphy](https://user-images.githubusercontent.com/25463174/146230752-caa2de57-fdd5-4eac-9573-cf31e8978d7d.gif)
 
 </div>
 
@@ -43,6 +42,7 @@ As part of my back-end with <b>NodeJS</b> learning journey, I've built a REST AP
 
 A second version of the project using OOP (JavasScript Classes) and MySQL can be found here: <a href="https://github.com/jempico/dice-game-nodejs-mysql">Rest API for Dice Game (MySQL)</a>.
 
+![giphy](https://user-images.githubusercontent.com/25463174/146230752-caa2de57-fdd5-4eac-9573-cf31e8978d7d.gif)
 
 ## Main Features
 
