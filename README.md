@@ -8,6 +8,7 @@
     <img src="src/images/mongodb.png" alt="Logo" width="80" height="80">
   </a>
 
+ ![giphy](https://user-images.githubusercontent.com/25463174/146230408-04b514e6-0e1a-414a-8e51-05a69694921b.gif)
 
   <h3 align="center">REST API for a Dice Game</h3>
 
@@ -17,7 +18,6 @@
   </p>
 </div>
 
- ![giphy](https://user-images.githubusercontent.com/25463174/146230408-04b514e6-0e1a-414a-8e51-05a69694921b.gif)
 
 
 <!-- TABLE OF CONTENTS -->
