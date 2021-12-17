@@ -156,7 +156,7 @@ Authorization: Bearer <token>
 
 ## Things I've learned
 
-- [x] API Architecture best practices
+- [x] API Architecture best practices: OOP and design patterns, separation of concerns
 - [x] Set up a Cloud-Hosted Database with MondoDB Atlas
 - [x] Authenticate users with JSON web token.
 - [x] Get confident with Async/Await.
